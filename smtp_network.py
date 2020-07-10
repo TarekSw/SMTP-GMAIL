@@ -21,7 +21,7 @@ def mail(recipient_address, subject, body):
     try:
 
         sender_address = '' #sender email
-        sender_password = '' #sender password
+        sender_password = '' #sender email password
 
         message = MIMEMultipart()
         message['From'] = sender_address
@@ -91,7 +91,7 @@ pass
 #The Graphical User Interface (GUI)
 if __name__ == "__main__":
      window = thinker.Tk()
-     window.title("CMPS245 Project")
+     window.title("Networking Project")
      firstFrame = thinker.Frame()
      SecondFrame = thinker.Frame()
      ThirdFrame = thinker.Frame()
