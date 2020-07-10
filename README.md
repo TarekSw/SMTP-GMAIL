@@ -1,7 +1,7 @@
 [![Tech](https://img.shields.io/badge/Tech-python-red.svg)](https://www.python.org/)
 # SMTP
-This is a python project that send emails to any gmail account specified using the GUI 
-It was done as a mini-project for the networking course at university.
+This is a python project that send emails to any gmail account specified using the GUI. 
+<br><i>It was done as a mini-project for the networking course at university.</i>
 
 # Things to do
 
