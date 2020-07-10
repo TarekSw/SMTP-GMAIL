@@ -1,21 +1,13 @@
-#Tarek Swaidane - 201701409 - ths001@pu.edu.lb
-
 #First thing to do:
 # - Got to the google account settings and turn On Less Secure Apps feature.
-# in order to be able to send email from an outside application using the SMTP server.
+# in order to be able to send email from an outside application using the Gmail SMTP server.
 
-#used the create the email object message in order to send it.
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 
-#used to show dialog box in case of success or failers
 from tkinter import messagebox
-
-#Used to create the GUI
 import tkinter as thinker
-
-#used for establishing an server SMTP connection
 import smtplib
 
 #used for checking the regular expression comparisoon
@@ -25,21 +17,19 @@ import re
 reg = '^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$'
 
 # the main function through where the email is sent and the SMTP connection is established
-def mail(sender_address, sender_password, recipient_address, subject, body):
+def mail(recipient_address, subject, body):
     try:
-        #Taking the data for the email and save them into 
-        #message object instantiated from MIMEMultipart object. 
-        #where save multiple headers into 1 object as a message format.
+
+        sender_address = '' #sender email
+        sender_password = '' #sender password
+
         message = MIMEMultipart()
         message['From'] = sender_address
         message['To'] = sender_password
         message['Subject'] = subject
 
-        #attach the body taken from the UI into the message object as  plain text.
         message.attach(MIMEText(body, 'plain'))
         
-        #convert that object into plain text (String) in order
-        # to be able to send it through the email
         text = message.as_string()
 
         #Open a connection with the Gmail SMTP server on the port 587
@@ -63,7 +53,7 @@ def mail(sender_address, sender_password, recipient_address, subject, body):
 
         #if email was sent successfully it will show a dialog box saying that  
         # Your Email Was Sent Successfully
-        messagebox.showinfo("Successfull", "Your Email Was Sent Successfully")
+        messagebox.showinfo("Successfull", 'Your Email is Sent Successfully to '+recipient_address)
 
         #if any error happened for whatever reason it will show a dialog ox
         # saying that an error occurred and also print the error message by using (str(e))    
@@ -76,11 +66,9 @@ def mail(sender_address, sender_password, recipient_address, subject, body):
 #is button clicked. after the button clicked it checks if the recipient gmail match the regular 
 #expression defined ^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$ and if the regular expression matches 
 # the email entered it call the mail function defined previously and passes the required parameters.
-#where it takes to sender email and password in order to login into the server and after that it takes to receiver email
-# and the email subject & body it send the email to the receiver address taken as a parameter
 def send_on_click(event):
     if re.search(reg, str.lower(recipient_text.get())):
-         mail(str.lower(sender_text.get()), password_text.get(), str.lower(recipient_text.get()), subject_text.get(), body_text.get("1.0", "end"))
+         mail(str.lower(recipient_text.get()), subject_text.get(), body_text.get("1.0", "end"))
     else:
         #if any error occurred while doing the previous process it prints an error.
          messagebox.showerror("Error!!", "Please make sure all your input are in the proper format!")
@@ -100,38 +88,20 @@ def text_get(event):
 pass
 
 
-#this the code for Graphical User Interface (GUI)
+#The Graphical User Interface (GUI)
 if __name__ == "__main__":
-    #CREATE a GUI window in order to put the frames in it. where the window is like a box where
-    # you put your frames in. the frames are the text input & buttons & ... that you define and you to put
-    # in your GUI.
-    #here we defined our window and created our frames which they are the text inputs and the button and wired them up with the code.
      window = thinker.Tk()
      window.title("CMPS245 Project")
      firstFrame = thinker.Frame()
      SecondFrame = thinker.Frame()
      ThirdFrame = thinker.Frame()
-
-     sender_email = thinker.Label(master=firstFrame, text="From:")
-     sender_email.pack(side=thinker.LEFT, fill=thinker.BOTH)
-     sender_text = thinker.Entry(master=firstFrame)
-     sender_text.pack()
-     sender_text.bind('<KeyRelease>', text_get)
-     firstFrame.pack(padx=10, pady=10)
-
-     sender_password = thinker.Label(master=firstFrame, text="Password:")
-     sender_password.pack(side=thinker.LEFT, fill=thinker.BOTH)
-     password_text = thinker.Entry(master=firstFrame)
-     password_text.pack()
-     password_text.bind('<KeyRelease>', text_get)
-     firstFrame.pack(padx=10, pady=10)
     
      recipient = thinker.Label(master=firstFrame, text="Recipient:")
      recipient.pack(side=thinker.LEFT, fill=thinker.BOTH)
      recipient_text = thinker.Entry(master=firstFrame)
      recipient_text.pack()
      recipient_text.bind('<KeyRelease>', text_get)
-     firstFrame.pack(padx=10, pady=10)
+     firstFrame.pack(padx=30, pady=30)
     
      subject = thinker.Label(master=SecondFrame, text="Subject:   ")
      subject.pack(side=thinker.LEFT, fill=thinker.BOTH)
